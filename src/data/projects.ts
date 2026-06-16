@@ -22,8 +22,8 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "proyek-satu",
-    title: "Nama Proyek Satu",
+    slug: "redio",
+    title: "Redio TUI app radio player",
     description: {
       id: "Deskripsi singkat proyek ini dan masalah apa yang diselesaikan.",
       en: "A short description of this project and what problem it solves.",
@@ -33,25 +33,28 @@ export const projects: Project[] = [
       en: "A longer explanation on the /projects page. Can talk about technical challenges, architectural decisions, or results achieved.",
     },
     tags: ["Astro", "TypeScript", "Bun"],
-    href: "https://proyek-satu.dev",
     repo: "https://github.com/usernamekamu/proyek-satu",
     download_url: "https://github.com/usernamekamu/proyek-satu/releases",
-    image: "https://placehold.co/600x400/0a0a0c/00ffcc?text=Project+Preview",
+    image:
+      "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781598313/redio_euwkxw.gif",
     featured: true,
-    year: 2024,
+    year: 2026,
   },
   {
-    slug: "proyek-dua",
-    title: "Nama Proyek Dua",
+    slug: "baitul-mal",
+    title: "Baitul Mal Plus",
     description: {
       id: "Deskripsi singkat proyek kedua yang langsung ke poinnya.",
       en: "A short description of the second project that gets straight to the point.",
     },
-    tags: ["Go", "PostgreSQL", "Docker"],
-    frontend_repo: "https://github.com/usernamekamu/proyek-dua-frontend",
-    backend_repo: "https://github.com/usernamekamu/proyek-dua-backend",
+    tags: ["Flutter", "Sqlite"],
+    repo: "https://github.com/yumanuralfath/baitul_mal",
+    download_url:
+      "https://github.com/yumanuralfath/baitul_mal/releases/tag/v1.2.5",
+    image:
+      "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781598561/baitul_xhwwgv.gif",
     featured: true,
-    year: 2024,
+    year: 2026,
   },
   {
     slug: "proyek-tiga",

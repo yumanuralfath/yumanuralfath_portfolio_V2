@@ -1,7 +1,7 @@
 ---
 // src/components/ProjectCard.astro
 import type { Project } from "../data/projects";
-import { ExternalLink, Code, Layout, Database, Download } from "lucide-astro";
+import { ExternalLink, Code, Layout, Database, Download, Maximize2, X } from "lucide-astro";
 import { getLangFromUrl } from "@/i18n/utils";
 import { Image } from "astro:assets";
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { project, compact = false, loading = "eager" } = Astro.props;
-const { title, description, detail, tags, href, repo, frontend_repo, backend_repo, download_url, year, image } = project;
+const { slug, title, description, detail, tags, href, repo, frontend_repo, backend_repo, download_url, year, image } = project;
 
 const lang = getLangFromUrl(Astro.url);
 const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description[lang]);
@@ -23,29 +23,70 @@ const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description
   <div class="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-brand-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
   {image && (
-    <div class="relative w-full aspect-video mb-5 rounded-md overflow-hidden border border-brand-border/50 bg-brand-bg group-hover:border-brand-accent/30 transition-colors">
-      <!-- Media -->
-      {image.endsWith('.mp4') || image.endsWith('.webm') ? (
-        <video src={image} autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-      ) : (
-        <Image 
-          src={image} 
-          alt={title} 
-          width={800} 
-          height={450} 
-          loading={loading}
-          class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" 
-        />
-      )}
-      
-      <!-- Analytical Overlay -->
-      <div class="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
-        <div class="absolute top-2 left-2 w-2 h-2 border-t border-l border-brand-accent"></div>
-        <div class="absolute top-2 right-2 w-2 h-2 border-t border-r border-brand-accent"></div>
-        <div class="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-brand-accent"></div>
-        <div class="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-brand-accent"></div>
+    <>
+      <div 
+        class="relative w-full aspect-video mb-5 rounded-md overflow-hidden border border-brand-border/50 bg-brand-bg group-hover:border-brand-accent/30 transition-colors cursor-zoom-in project-image-container"
+        data-slug={slug}
+      >
+        <!-- Media -->
+        {image.endsWith('.mp4') || image.endsWith('.webm') ? (
+          <video src={image} autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+        ) : (
+          <Image 
+            src={image} 
+            alt={title} 
+            width={800} 
+            height={450} 
+            loading={loading}
+            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" 
+          />
+        )}
+        
+        <!-- Analytical Overlay -->
+        <div class="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+          <div class="absolute top-2 left-2 w-2 h-2 border-t border-l border-brand-accent"></div>
+          <div class="absolute top-2 right-2 w-2 h-2 border-t border-r border-brand-accent"></div>
+          <div class="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-brand-accent"></div>
+          <div class="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-brand-accent"></div>
+        </div>
+
+        <!-- Zoom Hint -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div class="bg-brand-bg/80 backdrop-blur-sm p-3 rounded-full border border-brand-accent/50 shadow-lg shadow-brand-accent/20 text-brand-accent">
+            <Maximize2 size={24} />
+          </div>
+        </div>
       </div>
-    </div>
+
+      <!-- Lightbox Modal -->
+      <dialog id={`dialog-${slug}`} class="project-dialog bg-transparent backdrop:bg-black/90 p-4 max-w-6xl w-full max-h-screen outline-none border-none overflow-hidden">
+        <div class="relative w-full h-full flex flex-col items-center justify-center gap-4">
+          <button 
+            class="close-dialog absolute top-0 right-0 md:-top-2 md:-right-2 text-white/50 hover:text-brand-accent transition-colors p-2 z-50"
+            data-slug={slug}
+          >
+            <X size={32} />
+          </button>
+
+          <div class="relative w-full max-h-[85vh] flex items-center justify-center">
+             {image.endsWith('.mp4') || image.endsWith('.webm') ? (
+              <video src={image} controls autoplay loop class="max-w-full max-h-[80vh] rounded-lg border border-brand-border shadow-2xl" />
+            ) : (
+              <img 
+                src={image} 
+                alt={title} 
+                class="max-w-full max-h-[80vh] rounded-lg border border-brand-border shadow-2xl object-contain" 
+              />
+            )}
+          </div>
+
+          <div class="text-center max-w-2xl px-4">
+            <h3 class="text-xl font-bold text-white mb-1">{title}</h3>
+            <p class="text-brand-muted text-sm">{description[lang]}</p>
+          </div>
+        </div>
+      </dialog>
+    </>
   )}
 
   <div class="flex items-baseline justify-between gap-3 mb-3">
@@ -93,3 +134,50 @@ const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description
     </div>
   </footer>
 </article>
+
+<script>
+  function setupDialogs() {
+    const containers = document.querySelectorAll('.project-image-container');
+    const closeButtons = document.querySelectorAll('.close-dialog');
+    const dialogs = document.querySelectorAll('.project-dialog');
+
+    containers.forEach(container => {
+      container.addEventListener('click', (e) => {
+        const slug = container.getAttribute('data-slug');
+        const dialog = document.getElementById(`dialog-${slug}`) as HTMLDialogElement;
+        if (dialog) {
+          dialog.showModal();
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    closeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const slug = button.getAttribute('data-slug');
+        const dialog = document.getElementById(`dialog-${slug}`) as HTMLDialogElement;
+        if (dialog) {
+          dialog.close();
+        }
+      });
+    });
+
+    dialogs.forEach(dialog => {
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) {
+          (dialog as HTMLDialogElement).close();
+        }
+      });
+
+      dialog.addEventListener('close', () => {
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  // Run on initial load
+  setupDialogs();
+
+  // Run on view transitions if enabled
+  document.addEventListener('astro:after-swap', setupDialogs);
+</script>
