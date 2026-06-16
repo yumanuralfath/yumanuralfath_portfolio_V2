@@ -1,0 +1,79 @@
+---
+// src/layouts/Base.astro
+import SEO from "@/components/SEO.astro";
+import ChemistryParticles from "@/components/ChemistryParticles.astro";
+import "@/styles/global.css";
+import { getLangFromUrl } from "@/i18n/utils";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  noindex?: boolean;
+}
+
+const seoProps = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+---
+
+<!doctype html>
+<html lang={lang} dir="ltr" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    <SEO {...seoProps} />
+
+    <script is:inline>
+      // Theme initialization script
+      (function() {
+        const theme = (function() {
+          if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+            return localStorage.getItem("theme");
+          }
+          if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+            return "light";
+          }
+          return "dark";
+        })();
+        
+        if (theme === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+          document.documentElement.classList.remove("dark");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+          document.documentElement.classList.add("dark");
+        }
+        
+        window.localStorage.setItem("theme", theme);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <!-- Skip to content -->
+    <a 
+      class="fixed -top-full left-4 bg-[var(--brand-accent)] text-white px-4 py-2 rounded-md text-sm font-medium z-[100] transition-[top] focus:top-4" 
+      href="#main"
+    >
+      Lewati ke konten
+    </a>
+
+    <slot />
+    <ChemistryParticles />
+  </body>
+</html>
