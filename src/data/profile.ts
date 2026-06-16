@@ -31,7 +31,8 @@ export interface Profile {
 export const profile: Profile = {
   name: "Yuma Nur Alfath",
   title: "Chemistry Graduate & Creative Coder",
-  avatar: "/me.jpg",
+  avatar:
+    "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781600575/me_jxbqtc.png",
   domain: "yumana.my.id",
   email: "yuma@yumana.my.id",
   location: "Pekanbaru, Indonesia",
