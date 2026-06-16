@@ -1,0 +1,37 @@
+---
+// src/pages/projects.astro
+import Page from "../layouts/Page.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { allProjects } from "../data/projects";
+import { profile } from "../data/profile";
+import { getLangFromUrl, useTranslations, useTranslatedPath } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Page
+  title={t('section.projects')}
+  description={profile.tagline[lang]}
+>
+  <div class="container mx-auto px-6 pt-12 pb-24">
+    <!-- Back link -->
+    <a href={translatePath('/')} class="inline-block text-sm text-brand-muted mb-8 hover:text-brand-text transition-colors">
+      {t('about.back')}
+    </a>
+
+    <header class="mb-12">
+      <h1 class="text-3xl font-semibold tracking-tight mb-3">{t('section.projects')}</h1>
+      <p class="text-base text-brand-muted max-w-[48ch] leading-relaxed">
+        {t('projects.subtitle')}
+      </p>
+    </header>
+
+    <div class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))]">
+      {allProjects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </div>
+</Page>

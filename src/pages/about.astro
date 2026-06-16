@@ -1,0 +1,91 @@
+---
+// src/pages/about.astro
+import Page from "@/layouts/Page.astro";
+import { profile } from "@/data/profile";
+import { getLangFromUrl, useTranslations, useTranslatedPath } from "@/i18n/utils";
+import { Image } from "astro:assets";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Page
+  title={t('section.about')}
+  description={profile.tagline[lang]}
+>
+  <div class="container mx-auto px-6 pt-12 pb-24">
+    <a href={translatePath('/')} class="inline-block text-sm text-brand-muted mb-8 hover:text-brand-text transition-colors">
+      {t('about.back')}
+    </a>
+
+    <div class="grid gap-12 lg:gap-20">
+      <!-- Bio + Photo Section -->
+      <section aria-labelledby="h-bio" class="grid lg:grid-cols-[1fr_300px] gap-12 items-start">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-semibold tracking-tight mb-2">{profile.name}</h1>
+          <p class="text-sm font-mono text-brand-muted mb-8">{profile.title} · {profile.location}</p>
+
+          <div class="flex flex-col gap-5 text-brand-muted leading-relaxed mb-10 text-base md:text-lg">
+            {profile.bio_full[lang].map((para) => <p>{para}</p>)}
+          </div>
+        </div>
+
+        <!-- Specimen Photo Frame -->
+        <div 
+          id="specimen-frame"
+          class="relative group mx-auto lg:mx-0 order-first lg:order-last cursor-pointer touch-manipulation"
+        >
+          <div class="absolute -inset-4 border border-brand-accent/20 rounded-xl pointer-events-none group-hover:border-brand-accent/40 transition-colors"></div>
+          
+          <div class="relative w-64 h-80 rounded-lg overflow-hidden border-2 border-brand-border bg-brand-surface glass shadow-2xl">
+            <Image 
+              id="specimen-img"
+              src={profile.avatar} 
+              alt={profile.name} 
+              width={512}
+              height={640}
+              loading="eager"
+              fetchpriority="high"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+            />
+            
+            <!-- Technical Overlay -->
+            <div class="absolute inset-0 blueprint-grid opacity-10 pointer-events-none"></div>
+            
+            <!-- Scanning Line Effect -->
+            <div id="scan-line" class="absolute inset-0 bg-linear-to-b from-transparent via-brand-accent/20 to-transparent h-12 w-full -top-12 group-hover:animate-scan pointer-events-none"></div>
+            
+            <!-- Viewport Corners -->
+            <div class="absolute top-4 left-4 w-4 h-4 border-t border-l border-brand-accent/50"></div>
+            <div class="absolute top-4 right-4 w-4 h-4 border-t border-r border-brand-accent/50"></div>
+            <div class="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-brand-accent/50"></div>
+            <div class="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-brand-accent/50"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const specimenFrame = document.getElementById('specimen-frame');
+    const specimenImg = document.getElementById('specimen-img');
+    const scanLine = document.getElementById('scan-line');
+
+    specimenFrame?.addEventListener('click', () => {
+      if (window.innerWidth < 1024) { // lg breakpoint
+        specimenImg?.classList.toggle('grayscale');
+        specimenImg?.classList.toggle('grayscale-0');
+        specimenImg?.classList.toggle('scale-105');
+        specimenImg?.classList.toggle('scale-100');
+        
+        // Manual toggle for scan line animation on mobile
+        if (specimenImg?.classList.contains('grayscale-0')) {
+          scanLine?.classList.add('animate-scan');
+        } else {
+          scanLine?.classList.remove('animate-scan');
+        }
+      }
+    });
+  </script>
+</Page>
