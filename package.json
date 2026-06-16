@@ -1,5 +1,5 @@
 {
-  "name": "yumanuralfath-portfolio-v2",
+  "name": "yumanuralfath-website-v2",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -25,3 +25,4 @@
     "tailwindcss": "^4.3.1"
   }
 }
+
