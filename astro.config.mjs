@@ -2,10 +2,13 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://yumana.my.id",
   compressHTML: true,
+
   i18n: {
     defaultLocale: "id",
     locales: ["id", "en"],
@@ -13,13 +16,17 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
       exclude: ["@tailwindcss/vite"]
     }
   },
+
   build: {
     inlineStylesheets: "auto",
   },
+
+  adapter: cloudflare(),
 });
