@@ -30,42 +30,42 @@ export interface Profile {
 
 export const profile: Profile = {
   name: "Yuma Nur Alfath",
-  title: "Software Developer",
+  title: "Chemistry Graduate & Creative Coder",
   avatar: "/me.jpg",
   domain: "yumana.my.id",
   email: "yuma@yumana.my.id",
   location: "Pekanbaru, Indonesia",
 
   tagline: {
-    id: "Software developer yang membangun produk web yang cepat dan mudah dipahami.",
-    en: "Software developer building fast and intuitive web products.",
+    id: "Sarjana Kimia yang hobi mengeksplorasi dunia lewat baris kode dan simulasi.",
+    en: "Chemistry graduate exploring the world through code and simulations.",
   },
 
   bio_short: {
-    id: "Saya seorang software developer dengan fokus di web. Senang membangun hal yang berguna — dari UI yang responsif sampai sistem backend yang efisien.",
-    en: "I'm a software developer focused on web technologies. I enjoy building useful things — from responsive UIs to efficient backend systems.",
+    id: "Saya seorang sarjana kimia yang jatuh cinta pada pemrograman. Bagi saya, koding adalah tempat bermain sekaligus laboratorium digital untuk mencoba berbagai ide.",
+    en: "I am a chemistry graduate who fell in love with programming. To me, coding is both a playground and a digital laboratory for testing various ideas.",
   },
 
   bio_full: {
     id: [
-      "Saya seorang software developer berbasis di Pekanbaru, Indonesia. Fokus saya adalah membangun produk web yang performan, aksesibel, dan mudah dipakai — baik untuk pengguna akhir maupun developer lain yang akan melanjutkan kode saya.",
-      "Sekarang saya banyak bekerja dengan TypeScript, Go, dan ekosistem modern JavaScript. Saya percaya kode yang baik adalah kode yang mudah dibaca — oleh orang lain, atau oleh diri sendiri 6 bulan ke depan.",
-      "Di luar kode, saya tertarik pada desain sistem, performa web, dan bagaimana produk teknologi bisa benar-benar membantu orang.",
+      "Saya adalah seorang sarjana kimia yang menemukan keasyikan tersendiri di antara molekul dan algoritma. Latar belakang saya di Komputasi Kimia memang mengajarkan saya tentang presisi, tapi pemrograman memberikan saya kebebasan untuk berkreasi.",
+      "Bagi saya, koding bukan sekadar kerja teknis, tapi hobi yang seru. Kadang saya menggunakannya untuk mensimulasikan fenomena sains, tapi seringkali saya hanya ingin membangun sesuatu yang menarik, fungsional, atau sekadar eksperimen kreatif.",
+      "Di sini, saya memadukan pola pikir saintis yang terukur dengan hobi pemrograman yang eksploratif. Selamat datang di lab pribadi sekaligus ruang bermain digital saya.",
     ],
     en: [
-      "I'm a software developer based in Pekanbaru, Indonesia. My focus is on building performant, accessible, and user-friendly web products — for both end-users and fellow developers who will maintain my code.",
-      "Currently, I work extensively with TypeScript, Go, and the modern JavaScript ecosystem. I believe good code is code that is easy to read — by others, or by myself 6 months from now.",
-      "Beyond coding, I'm interested in system design, web performance, and how technological products can truly help people.",
+      "I am a chemistry graduate who finds a unique joy between molecules and algorithms. While my background in Computational Chemistry taught me about precision, programming gives me the freedom to create.",
+      "To me, coding isn't just technical work; it's an exciting hobby. Sometimes I use it to simulate scientific phenomena, but often I just want to build something interesting, functional, or simply a creative experiment.",
+      "Here, I blend the measured mindset of a scientist with an exploratory programming hobby. Welcome to my personal lab and digital playground.",
     ],
   },
 
   links: {
-    github: "https://github.com/yumanuralfath",
-    codeberg: "https://codeberg.org/yuma",
-    linkedin: "https://linkedin.com/in/yumanuralfath",
-    whatsapp: "https://wa.me/6281234567890",
-    instagram: "https://instagram.com/yuma.nur",
-    facebook: "https://facebook.com/yuma.nur",
-    discord: "https://discord.com/users/yuma",
+    github: "https://github.com/yumanuralfath/",
+    codeberg: "https://codeberg.org/yumana",
+    linkedin: "https://linkedin.com/in/yumana",
+    whatsapp: "https://wa.me/6282268975635",
+    instagram: "https://instagram.com/yumana20",
+    facebook: "https://facebook.com/yuma.nuralfath",
+    discord: "https://discord.com/users/393721612358254592",
   },
 };
