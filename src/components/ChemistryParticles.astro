@@ -1,0 +1,102 @@
+---
+// src/components/ChemistryParticles.astro
+---
+
+<canvas id="particle-canvas" class="fixed inset-0 -z-10 pointer-events-none"></canvas>
+
+<script>
+  class Particle {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+    color: string;
+
+    constructor(width: number, height: number, color: string) {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.size = Math.random() * 2 + 1;
+      this.color = color;
+    }
+
+    update(width: number, height: number) {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x < 0 || this.x > width) this.vx *= -1;
+      if (this.y < 0 || this.y > height) this.vy *= -1;
+    }
+
+    draw(ctx: CanvasRenderingContext2D) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+
+  const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d');
+  let particles: Particle[] = [];
+  let animationFrame: number;
+
+  const init = () => {
+    if (!canvas || !ctx) return;
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 30 : 80;
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const color = theme === 'light' ? 'rgba(37, 99, 235, 0.2)' : 'rgba(0, 255, 204, 0.2)';
+    const connectionColor = theme === 'light' ? 'rgba(37, 99, 235, 0.05)' : 'rgba(0, 255, 204, 0.05)';
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    particles = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle(canvas.width, canvas.height, color));
+    }
+    
+    cancelAnimationFrame(animationFrame);
+    animate(connectionColor);
+  };
+
+  const animate = (connectionColor: string) => {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, i) => {
+      p.update(canvas.width, canvas.height);
+      p.draw(ctx);
+
+      for (let j = i + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+        if (dist < 150) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = connectionColor;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    });
+
+    animationFrame = requestAnimationFrame(() => animate(connectionColor));
+  };
+
+  window.addEventListener('resize', () => {
+    init();
+  });
+
+  // Listen for theme changes to update particle colors
+  const observer = new MutationObserver(() => {
+    init();
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+
+  init();
+</script>

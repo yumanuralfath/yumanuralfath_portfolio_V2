@@ -1,0 +1,80 @@
+---
+// src/components/ProjectCard.astro
+import type { Project } from "../data/projects";
+import { ExternalLink, Github } from "lucide-astro";
+import { getLangFromUrl } from "@/i18n/utils";
+import { Image } from "astro:assets";
+
+interface Props {
+  project: Project;
+  compact?: boolean;
+  loading?: "eager" | "lazy";
+}
+
+const { project, compact = false, loading = "eager" } = Astro.props;
+const { title, description, detail, tags, href, repo, year, image } = project;
+
+const lang = getLangFromUrl(Astro.url);
+const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description[lang]);
+---
+
+<article class="relative group p-6 border border-brand-border rounded-lg glass overflow-hidden transition-all duration-300 hover:border-brand-accent hover:-translate-y-1">
+  <!-- Glowing Laboratory Effect -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-brand-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+  {image && (
+    <div class="relative w-full aspect-video mb-5 rounded-md overflow-hidden border border-brand-border/50 bg-brand-bg group-hover:border-brand-accent/30 transition-colors">
+      <!-- Media -->
+      {image.endsWith('.mp4') || image.endsWith('.webm') ? (
+        <video src={image} autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+      ) : (
+        <Image 
+          src={image} 
+          alt={title} 
+          width={800} 
+          height={450} 
+          loading={loading}
+          class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" 
+        />
+      )}
+      
+      <!-- Analytical Overlay -->
+      <div class="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+        <div class="absolute top-2 left-2 w-2 h-2 border-t border-l border-brand-accent"></div>
+        <div class="absolute top-2 right-2 w-2 h-2 border-t border-r border-brand-accent"></div>
+        <div class="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-brand-accent"></div>
+        <div class="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-brand-accent"></div>
+      </div>
+    </div>
+  )}
+
+  <div class="flex items-baseline justify-between gap-3 mb-3">
+    <h3 class="text-base font-semibold tracking-tight text-brand-text">{title}</h3>
+    <span class="text-xs font-mono text-brand-muted">{year}</span>
+  </div>
+
+  <p class="text-sm leading-relaxed text-brand-muted mb-4 flex-1">{displayDesc}</p>
+
+  <footer class="mt-auto flex items-center justify-between gap-4 flex-wrap">
+    <ul class="flex flex-wrap gap-2" aria-label="Teknologi">
+      {tags.map((tag) => (
+        <li class="text-[10px] font-mono text-brand-accent px-2 py-0.5 bg-brand-accent-dim border border-brand-accent-dim rounded">
+          {tag}
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex items-center gap-4">
+      {href && (
+        <a href={href} class="text-brand-accent hover:opacity-70 transition-opacity" target="_blank" rel="noopener noreferrer" title="Live Preview">
+          <ExternalLink size={16} />
+        </a>
+      )}
+      {repo && (
+        <a href={repo} class="text-brand-accent hover:opacity-70 transition-opacity" target="_blank" rel="noopener noreferrer" title="Source Code">
+          <Github size={16} />
+        </a>
+      )}
+    </div>
+  </footer>
+</article>
