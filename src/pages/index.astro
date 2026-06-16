@@ -39,82 +39,66 @@ const socialHub = [
   title={`${profile.name} — ${profile.title}`}
   description={profile.tagline[lang]}
 >
-  <!-- Hero Section -->
-  <section class="pt-24 pb-16 container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
-    <div class="flex-1">
-      <p class="text-sm font-mono text-brand-muted mb-3">{t('hero.greeting')}</p>
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tighter leading-[1.05] mb-5">{profile.name}</h1>
-      <p class="text-lg text-brand-muted max-w-[44ch] leading-relaxed mb-8">{profile.tagline[lang]}</p>
+  <!-- Hero Section (Minimalist & Centered) -->
+  <section class="relative pt-32 pb-24 overflow-hidden">
+    <!-- Ambient Background Elements -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl aspect-square bg-brand-accent/5 blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="absolute top-0 left-0 w-full h-full blueprint-grid opacity-[0.03] pointer-events-none [mask-image:radial-gradient(circle_at_center,black,transparent_80%)]"></div>
 
-      <div class="flex flex-wrap items-center gap-3">
-        <a href="#projects" class="inline-flex items-center px-6 py-3 rounded-lg text-sm font-medium bg-brand-accent text-brand-bg hover:opacity-90 transition-all hover:scale-[1.02]">
-          {t('hero.cta.projects')}
-          <ArrowRight size={16} class="ml-2" />
-        </a>
+    <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-accent/20 bg-brand-accent/5 text-[10px] font-mono text-brand-accent mb-6 uppercase tracking-widest">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-accent"></span>
+        </span>
+        {t('hero.greeting')}
+      </div>
 
-        <a href="https://notes.yumana.my.id/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-5 py-3 rounded-lg text-sm font-medium border border-brand-border text-brand-text hover:bg-brand-surface transition-colors group/journal">
-          <Notebook size={16} class="mr-2 text-brand-accent" />
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tighter leading-[0.95] mb-8 max-w-[12ch]">
+        {profile.name.split(' ').map((word, i) => (
+          <span class={i === profile.name.split(' ').length - 1 ? "text-brand-accent" : "text-brand-text"}>
+            {word}{i !== profile.name.split(' ').length - 1 && <br class="hidden md:block" />}
+            {i !== profile.name.split(' ').length - 1 && <span class="md:hidden"> </span>}
+          </span>
+        ))}
+      </h1>
+
+      <p class="text-lg md:text-xl text-brand-muted max-w-[32ch] leading-relaxed mb-12 mx-auto">
+        {profile.tagline[lang]}
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-5">
+        <a href="https://notes.yumana.my.id/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-10 py-4 rounded-full text-sm font-semibold bg-brand-accent text-brand-bg hover:shadow-[0_0_40px_rgba(0,255,204,0.4)] transition-all hover:scale-[1.03] group/journal active:scale-95">
+          <Notebook size={18} class="mr-2.5 transition-transform group-hover/journal:rotate-12" />
           {t('hero.cta.journal')}
         </a>
         
-        <!-- Social Hub -->
         <div class="relative group/hub" id="social-hub">
           <button 
             id="hub-toggle"
-            class="inline-flex items-center px-6 py-3 rounded-lg text-sm font-medium border border-brand-border text-brand-text hover:bg-brand-surface transition-colors cursor-pointer active:scale-95"
+            class="inline-flex items-center px-10 py-4 rounded-full text-sm font-semibold border border-brand-border text-brand-text hover:bg-brand-surface hover:border-brand-accent/30 transition-all cursor-pointer active:scale-95"
           >
             {t('hero.cta.contact')}
           </button>
           
-          <!-- Hover Bridge (PC) -->
-          <div class="absolute bottom-full left-0 w-full h-4 bg-transparent pointer-events-auto hidden md:block"></div>
-
           <div 
             id="hub-panel"
-            class="absolute bottom-full left-0 mb-3 flex flex-wrap gap-2 p-3 border border-brand-border rounded-xl glass shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover/hub:md:opacity-100 group-hover/hub:md:translate-y-0 group-hover/hub:md:pointer-events-auto transition-all duration-300 w-64 z-20"
+            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-6 flex flex-wrap justify-center gap-2.5 p-4 border border-brand-border rounded-3xl glass shadow-[0_20px_50px_rgba(0,0,0,0.5)] opacity-0 translate-y-6 pointer-events-none group-hover/hub:md:opacity-100 group-hover/hub:md:translate-y-0 group-hover/hub:md:pointer-events-auto transition-all duration-500 w-72 z-20"
           >
-            <div class="absolute inset-0 blueprint-grid opacity-5 pointer-events-none rounded-xl"></div>
+            <div class="absolute inset-0 blueprint-grid opacity-10 pointer-events-none rounded-3xl"></div>
             {socialHub.map(({ icon: SocialIcon, href, label }) => (
               <a 
                 href={href} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="flex-1 flex items-center justify-center min-w-[40px] h-10 rounded-lg border border-brand-border hover:border-brand-accent hover:bg-brand-accent-dim text-brand-muted hover:text-brand-accent transition-all group/icon"
+                class="flex-1 flex items-center justify-center min-w-[54px] h-14 rounded-2xl border border-brand-border hover:border-brand-accent hover:bg-brand-accent-dim text-brand-muted hover:text-brand-accent transition-all group/icon"
                 title={label}
               >
-                <SocialIcon size={18} class="group-hover/icon:scale-110 transition-transform" />
+                <SocialIcon size={22} class="group-hover:scale-110 transition-transform" />
               </a>
             ))}
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Floating Atomic Avatar -->
-    <div 
-      id="hero-avatar"
-      class="relative w-40 h-48 md:w-64 md:h-64 shrink-0 group mx-auto md:mx-0 cursor-pointer touch-manipulation"
-    >
-      <!-- Electron Orbits -->
-      <div class="absolute inset-0 border border-brand-accent/30 rounded-full animate-[spin_20s_linear_infinite] scale-75 md:scale-100">
-        <div class="absolute -top-1 left-1/2 w-2 h-2 bg-brand-accent rounded-full shadow-[0_0_15px_var(--brand-accent)]"></div>
-      </div>
-      <div class="absolute inset-4 border border-brand-accent/15 rounded-full animate-[spin_15s_linear_infinite_reverse] scale-75 md:scale-100">
-        <div class="absolute top-1/2 -right-1 w-2 h-2 bg-brand-accent rounded-full opacity-60 shadow-[0_0_10px_var(--brand-accent)]"></div>
-      </div>
-      
-      <div class="relative w-36 h-36 md:w-full md:h-full mx-auto rounded-full overflow-hidden border-2 border-brand-border glass p-1 md:p-1.5 transition-all duration-500 group-hover:border-brand-accent/50 group-hover:shadow-[0_0_30px_rgba(0,255,204,0.15)] dark:group-hover:shadow-[0_0_30px_rgba(0,255,204,0.1)]">
-        <Image 
-          id="avatar-img"
-          src={profile.avatar} 
-          alt={profile.name} 
-          width={400} 
-          height={400} 
-          loading="eager"
-          fetchpriority="high"
-          class="w-full h-full object-cover rounded-full grayscale group-hover:grayscale-0 transition-all duration-700 brightness-90 group-hover:brightness-100" 
-        />
-        <div class="absolute inset-0 bg-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
       </div>
     </div>
   </section>
@@ -123,36 +107,24 @@ const socialHub = [
     const hubToggle = document.getElementById('hub-toggle');
     const hubPanel = document.getElementById('hub-panel');
     const socialHubContainer = document.getElementById('social-hub');
-    const heroAvatar = document.getElementById('hero-avatar');
-    const avatarImg = document.getElementById('avatar-img');
-
-    // Avatar interaction for mobile
-    heroAvatar?.addEventListener('click', () => {
-      if (window.innerWidth < 768) {
-        avatarImg?.classList.toggle('grayscale');
-        avatarImg?.classList.toggle('grayscale-0');
-        avatarImg?.classList.toggle('brightness-90');
-        avatarImg?.classList.toggle('brightness-100');
-      }
-    });
 
     hubToggle?.addEventListener('click', (e) => {
       if (window.innerWidth < 768) {
         e.stopPropagation();
         const isOpen = hubPanel?.classList.contains('opacity-100');
         if (isOpen) {
-          hubPanel?.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+          hubPanel?.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
           hubPanel?.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
         } else {
           hubPanel?.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-          hubPanel?.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+          hubPanel?.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
         }
       }
     });
 
     document.addEventListener('click', (e) => {
       if (!socialHubContainer?.contains(e.target as Node)) {
-        hubPanel?.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+        hubPanel?.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
         hubPanel?.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
       }
     });
