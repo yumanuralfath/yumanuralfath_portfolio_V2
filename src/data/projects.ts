@@ -1,6 +1,3 @@
-// src/data/projects.ts
-// Semua data proyek ada di sini — tinggal edit file ini
-
 export interface Project {
   slug: string; // untuk URL /projects#slug
   title: string;
@@ -14,7 +11,10 @@ export interface Project {
   };
   tags: string[];
   href?: string; // link live
-  repo?: string; // link github
+  repo?: string; // link repo (general)
+  frontend_repo?: string; // link repo frontend (opsional)
+  backend_repo?: string; // link repo backend (opsional)
+  download_url?: string; // link download (opsional)
   image?: string; // URL gambar, GIF, atau path video (opsional)
   featured: boolean; // true = tampil di landing page preview
   year: number;
@@ -35,6 +35,7 @@ export const projects: Project[] = [
     tags: ["Astro", "TypeScript", "Bun"],
     href: "https://proyek-satu.dev",
     repo: "https://github.com/usernamekamu/proyek-satu",
+    download_url: "https://github.com/usernamekamu/proyek-satu/releases",
     image: "https://placehold.co/600x400/0a0a0c/00ffcc?text=Project+Preview",
     featured: true,
     year: 2024,
@@ -47,7 +48,8 @@ export const projects: Project[] = [
       en: "A short description of the second project that gets straight to the point.",
     },
     tags: ["Go", "PostgreSQL", "Docker"],
-    repo: "https://github.com/usernamekamu/proyek-dua",
+    frontend_repo: "https://github.com/usernamekamu/proyek-dua-frontend",
+    backend_repo: "https://github.com/usernamekamu/proyek-dua-backend",
     featured: true,
     year: 2024,
   },

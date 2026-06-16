@@ -1,7 +1,7 @@
 ---
 // src/components/ProjectCard.astro
 import type { Project } from "../data/projects";
-import { ExternalLink, Github } from "lucide-astro";
+import { ExternalLink, Code, Layout, Database, Download } from "lucide-astro";
 import { getLangFromUrl } from "@/i18n/utils";
 import { Image } from "astro:assets";
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { project, compact = false, loading = "eager" } = Astro.props;
-const { title, description, detail, tags, href, repo, year, image } = project;
+const { title, description, detail, tags, href, repo, frontend_repo, backend_repo, download_url, year, image } = project;
 
 const lang = getLangFromUrl(Astro.url);
 const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description[lang]);
@@ -70,9 +70,24 @@ const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description
           <ExternalLink size={16} />
         </a>
       )}
-      {repo && (
+      {frontend_repo && (
+        <a href={frontend_repo} class="text-brand-accent hover:opacity-70 transition-opacity" target="_blank" rel="noopener noreferrer" title="Frontend Repo">
+          <Layout size={16} />
+        </a>
+      )}
+      {backend_repo && (
+        <a href={backend_repo} class="text-brand-accent hover:opacity-70 transition-opacity" target="_blank" rel="noopener noreferrer" title="Backend Repo">
+          <Database size={16} />
+        </a>
+      )}
+      {repo && !frontend_repo && !backend_repo && (
         <a href={repo} class="text-brand-accent hover:opacity-70 transition-opacity" target="_blank" rel="noopener noreferrer" title="Source Code">
-          <Github size={16} />
+          <Code size={16} />
+        </a>
+      )}
+      {download_url && (
+        <a href={download_url} class="text-brand-accent hover:opacity-70 transition-opacity" target="_blank" rel="noopener noreferrer" title="Download">
+          <Download size={16} />
         </a>
       )}
     </div>
