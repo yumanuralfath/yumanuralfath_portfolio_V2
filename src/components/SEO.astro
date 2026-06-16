@@ -26,8 +26,8 @@ const {
 } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
-const siteName = "yumana.";
-const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
+const siteName = "Yuma Nur Alfath Website";
+const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 const fullImageURL = new URL(image, Astro.site).toString();
 ---
 

@@ -1,17 +1,15 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import cloudflare from "@astrojs/cloudflare";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://yumana.my.id",
-  adapter: cloudflare({
-    sessionKVBindingName: undefined,
-  }),
   compressHTML: true,
+  integrations: [sitemap()],
   i18n: {
-    defaultLocale: "id",
+    defaultLocale: "en",
     locales: ["id", "en"],
     routing: {
       prefixDefaultLocale: false,
