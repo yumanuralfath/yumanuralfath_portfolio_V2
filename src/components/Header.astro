@@ -1,0 +1,104 @@
+---
+// src/components/Header.astro
+import { Hexagon, Sun, Moon, Languages } from "lucide-astro";
+import { getLangFromUrl, useTranslations, useTranslatedPath } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+const navLinks = [
+  { href: "/app", label: t('nav.app') },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-brand-border glass">
+  <div class="container mx-auto px-4 md:px-6 flex items-center justify-between h-14">
+    <a href={translatePath('/')} class="flex items-center gap-2 text-base font-semibold group shrink-0" aria-label="Kembali ke beranda">
+      <div class="text-brand-accent transition-transform group-hover:rotate-12">
+        <Hexagon size={24} />
+      </div>
+      <span class="font-mono hidden sm:inline text-brand-text">yumana<span class="text-brand-accent">.</span></span>
+    </a>
+
+    <nav aria-label="Navigasi utama" class="flex items-center gap-4 md:gap-6">
+      <ul class="flex gap-4 md:gap-6">
+        {navLinks.map(({ href, label }) => (
+          <li>
+            <a href={translatePath(href)} class="text-xs md:text-sm text-brand-muted hover:text-brand-text transition-colors">
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="h-6 w-px bg-brand-border"></div>
+
+      <div class="flex items-center gap-2">
+        <!-- Language Switcher -->
+        <a
+          href={lang === 'id' ? `/en${Astro.url.pathname}` : Astro.url.pathname.replace('/en', '') || '/'}
+          class="flex items-center justify-center w-8 h-8 rounded-md text-brand-muted hover:text-brand-accent transition-colors"
+          title={lang === 'id' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia'}
+          aria-label={lang === 'id' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia'}
+        >
+          <Languages size={18} />
+        </a>
+
+        <button
+          id="theme-toggle"
+          class="flex items-center justify-center w-9 h-9 rounded-lg border border-brand-border text-brand-muted hover:text-brand-accent hover:border-brand-accent hover:bg-brand-accent-dim transition-all cursor-pointer"
+          aria-label="Ganti tema"
+        >
+          <div id="sun-icon" class="hidden"><Sun size={20} /></div>
+          <div id="moon-icon" class="hidden"><Moon size={20} /></div>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const themeToggle = document.getElementById("theme-toggle");
+  const sunIcon = document.getElementById("sun-icon");
+  const moonIcon = document.getElementById("moon-icon");
+  
+  const getTheme = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  };
+
+  const updateIcons = (theme: string) => {
+    if (theme === "light") {
+      sunIcon?.classList.add("hidden");
+      moonIcon?.classList.remove("hidden");
+    } else {
+      sunIcon?.classList.remove("hidden");
+      moonIcon?.classList.add("hidden");
+    }
+  };
+
+  const setTheme = (theme: string) => {
+    const root = document.documentElement;
+    if (theme === "light") {
+      root.setAttribute("data-theme", "light");
+      root.classList.remove("dark");
+    } else {
+      root.setAttribute("data-theme", "dark");
+      root.classList.add("dark");
+    }
+    localStorage.setItem("theme", theme);
+    updateIcons(theme);
+  };
+
+  // Initial set
+  const initialTheme = getTheme();
+  setTheme(initialTheme);
+
+  themeToggle?.addEventListener("click", () => {
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    setTheme(isLight ? "dark" : "light");
+  });
+</script>

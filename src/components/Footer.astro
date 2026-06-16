@@ -1,0 +1,35 @@
+---
+// src/components/Footer.astro
+import { Github, Mail, Linkedin } from "lucide-astro";
+import { profile } from "@/data/profile";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const currentYear = new Date().getFullYear();
+const { links, email } = profile;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<footer class="border-t border-brand-border py-12 mt-20">
+  <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="text-center md:text-left">
+      <p class="text-sm text-brand-muted">
+        &copy; {currentYear} yumana. {t('footer.built_with')} 
+        <span class="text-brand-accent">Astro</span> & 
+        <span class="text-brand-accent">Tailwind</span>.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <a href={links.github} class="text-brand-muted hover:text-brand-accent transition-colors" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <Github size={20} />
+      </a>
+      <a href={links.linkedin} class="text-brand-muted hover:text-brand-accent transition-colors" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <Linkedin size={20} />
+      </a>
+      <a href={`mailto:${email}`} class="text-brand-muted hover:text-brand-accent transition-colors" aria-label="Email">
+        <Mail size={20} />
+      </a>
+    </div>
+  </div>
+</footer>

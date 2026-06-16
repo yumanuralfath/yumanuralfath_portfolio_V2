@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  /* Chemistry Theme Tokens - Linked to CSS Variables for Dynamicity */
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-border: var(--brand-border);
+  --color-brand-text: var(--brand-text);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-dim: var(--brand-accent-dim);
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  
+  /* Enable class-based dark mode for Tailwind v4 */
+  --variant-dark: (.dark &);
+}
+
+:root {
+  --brand-bg: #0a0a0c;
+  --brand-surface: #141418;
+  --brand-border: #1e1e24;
+  --brand-text: #e0e0e0;
+  --brand-muted: #888891;
+  --brand-accent: #00ffcc;
+  --brand-accent-dim: #00ffcc22;
+  
+  /* Molecular Particle Background - Replaced by Dynamic Particles */
+  --bg-pattern: none;
+  --bg-pattern-size: 300px 300px;
+}
+
+[data-theme="light"] {
+  --brand-bg: #fcfcfd;
+  --brand-surface: #ffffff;
+  --brand-border: #e2e8f0;
+  --brand-text: #0f172a;
+  --brand-muted: #64748b;
+  --brand-accent: #2563eb;
+  --brand-accent-dim: #2563eb10;
+  
+  --bg-pattern: none;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-bg text-brand-text font-sans antialiased min-h-screen;
+    background-image: var(--bg-pattern);
+    background-size: var(--bg-pattern-size);
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-md bg-[color-mix(in_srgb,var(--brand-surface)_70%,transparent)] border-brand-border;
+  }
+
+  @keyframes scan {
+    0% { top: -20%; }
+    100% { top: 120%; }
+  }
+
+  .animate-scan {
+    animation: scan 3s linear infinite;
+  }
+
+  .blueprint-grid {
+    background-image: 
+      linear-gradient(to right, var(--brand-accent-dim) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--brand-accent-dim) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
