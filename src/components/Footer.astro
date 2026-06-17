@@ -3,11 +3,13 @@
 import { Github, Mail, Linkedin } from "lucide-astro";
 import { profile } from "@/data/profile";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import pkg from "../../package.json";
 
 const currentYear = new Date().getFullYear();
 const { links, email } = profile;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const version = pkg.version;
 ---
 
 <footer class="border-t border-brand-border py-12 mt-20">
@@ -17,6 +19,7 @@ const t = useTranslations(lang);
         &copy; {currentYear} Yuma Nur Alfath. {t('footer.built_with')} 
         <span class="text-brand-accent">Astro</span> & 
         <span class="text-brand-accent">Tailwind</span>.
+        <span class="ml-2 px-1.5 py-0.5 text-[10px] font-mono border border-brand-border rounded text-brand-muted/70">v{version}</span>
       </p>
     </div>
 
