@@ -1,7 +1,7 @@
 ---
 // src/components/ProjectCard.astro
 import type { Project } from "../data/projects";
-import { ExternalLink, Code, Layout, Database, Download, Maximize2, X } from "lucide-astro";
+import { ExternalLink, Code, Layout, Database, Download, Maximize2, X, Monitor, Smartphone, Terminal } from "lucide-astro";
 import { getLangFromUrl } from "@/i18n/utils";
 import { Image } from "astro:assets";
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { project, compact = false, loading = "eager" } = Astro.props;
-const { slug, title, description, detail, tags, href, repo, frontend_repo, backend_repo, download_url, year, image, thumbnail, video } = project;
+const { slug, title, description, detail, tags, href, repo, frontend_repo, backend_repo, download_url, downloads, year, image, thumbnail, video } = project;
 
 const lang = getLangFromUrl(Astro.url);
 const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description[lang]);
@@ -20,6 +20,15 @@ const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description
 const mediaSource = video || image;
 const isVideo = mediaSource?.endsWith('.mp4') || mediaSource?.endsWith('.webm') || mediaSource?.endsWith('.mkv') || mediaSource?.endsWith('.mov');
 const thumbSource = thumbnail || (isVideo ? null : image);
+
+const getPlatformIcon = (platform: string) => {
+  switch (platform) {
+    case 'windows': return Monitor;
+    case 'android': return Smartphone;
+    case 'linux': return Terminal;
+    default: return Download;
+  }
+};
 ---
 
 <article class="relative group p-6 border border-brand-border rounded-lg glass overflow-hidden transition-all duration-300 hover:border-brand-accent hover:-translate-y-1">
@@ -40,7 +49,10 @@ const thumbSource = thumbnail || (isVideo ? null : image);
             width={800} 
             height={450} 
             loading={loading}
-            class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-0 transition-opacity duration-500 z-10" 
+            class:list={[
+              "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 z-10",
+              isVideo ? "opacity-80 group-hover:opacity-0" : "opacity-80 group-hover:opacity-100"
+            ]}
           />
         )}
 
@@ -95,7 +107,7 @@ const thumbSource = thumbnail || (isVideo ? null : image);
 
           <div class="relative w-full max-h-[85vh] flex items-center justify-center">
              {isVideo ? (
-              <video src={mediaSource} controls autoplay loop class="max-w-full max-h-[80vh] rounded-lg border border-brand-border shadow-2xl" />
+              <video src={mediaSource} controls loop class="max-w-full max-h-[80vh] rounded-lg border border-brand-border shadow-2xl" />
             ) : (
               <img 
                 src={image} 
@@ -151,7 +163,15 @@ const thumbSource = thumbnail || (isVideo ? null : image);
           <Code size={16} />
         </a>
       )}
-      {download_url && (
+      {downloads && downloads.map((dl) => {
+        const Icon = getPlatformIcon(dl.platform);
+        return (
+          <a href={dl.url} class="text-brand-accent hover:opacity-70 transition-opacity" target="_blank" rel="noopener noreferrer" title={`Download for ${dl.platform}`}>
+            <Icon size={16} />
+          </a>
+        );
+      })}
+      {download_url && !downloads && (
         <a href={download_url} class="text-brand-accent hover:opacity-70 transition-opacity" target="_blank" rel="noopener noreferrer" title="Download">
           <Download size={16} />
         </a>
@@ -171,20 +191,14 @@ const thumbSource = thumbnail || (isVideo ? null : image);
       const card = container.closest('article');
 
       if (video && card) {
-        // Play and unmute when hovering the entire card
+        // Play when hovering the entire card (keep muted for preview)
         card.addEventListener('mouseenter', () => {
-          video.muted = false;
-          video.play().catch(() => {
-            // If unmute autoplay fails, try muted autoplay
-            video.muted = true;
-            video.play().catch(() => {});
-          });
+          video.play().catch(() => {});
         });
 
-        // Pause and mute when leaving the card
+        // Pause when leaving the card
         card.addEventListener('mouseleave', () => {
           video.pause();
-          video.muted = true;
           video.currentTime = 0;
         });
       }

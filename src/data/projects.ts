@@ -14,7 +14,11 @@ export interface Project {
   repo?: string; // link repo (general)
   frontend_repo?: string; // link repo frontend (opsional)
   backend_repo?: string; // link repo backend (opsional)
-  download_url?: string; // link download (opsional)
+  download_url?: string; // legacy link download (opsional)
+  downloads?: {
+    platform: "windows" | "linux" | "android" | "ios" | "web";
+    url: string;
+  }[];
   image?: string; // URL gambar, GIF, atau path video (opsional)
   thumbnail?: string; // URL thumbnail statis (opsional)
   video?: string; // URL video webm/mp4 (opsional)
@@ -23,6 +27,28 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    slug: "npy",
+    title: "NPY: Network Pharmacology Pipeline",
+    description: {
+      id: "Pipeline otomatis untuk analisis network pharmacology, mengintegrasikan GeneCard, SwissTarget, PantherDB, dan STRING.",
+      en: "Automated pipeline for network pharmacology analysis, integrating GeneCard, SwissTarget, PantherDB, and STRING.",
+    },
+    detail: {
+      id: "NPY (Network Pharmacology Pipeline) adalah alat bantu riset biokimia yang mengotomatisasi pengumpulan data dari berbagai database bioinformatika. Pipeline ini mempercepat proses identifikasi target gen, prediksi interaksi obat, analisis jalur fungsional, dan konstruksi jaringan protein-protein interaction (PPI).",
+      en: "NPY (Network Pharmacology Pipeline) is a biochemistry research tool that automates data collection from various bioinformatics databases. This pipeline accelerates the process of gene target identification, drug interaction prediction, functional pathway analysis, and protein-protein interaction (PPI) network construction.",
+    },
+    tags: ["Python", "Bioinformatics", "Pharmacology", "Data Scraping", "Automation"],
+    repo: "https://github.com/yumanuralfath/npy",
+    downloads: [
+      {
+        platform: "windows",
+        url: "https://github.com/yumanuralfath/npy/releases/download/1.0.0/NPY_Setup.exe",
+      },
+    ],
+    featured: true,
+    year: 2026,
+  },
   {
     slug: "redio",
     title: "Redio: TUI Radio Player",
@@ -36,7 +62,12 @@ export const projects: Project[] = [
     },
     tags: ["Rust", "TUI", "CLI", "Ratatui", "Tokio", "Radio-Browser API"],
     repo: "https://github.com/yumanuralfath/radio_browser_rust",
-    download_url: "https://crates.io/crates/redio",
+    downloads: [
+      {
+        platform: "linux",
+        url: "https://crates.io/crates/redio",
+      },
+    ],
     thumbnail:
       "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781677818/2026-06-17_13-24-41_ahwhyu_poster.jpg",
     video:
@@ -57,8 +88,12 @@ export const projects: Project[] = [
     },
     tags: ["Flutter", "Dart", "SQLite", "Mobile", "Local-first"],
     repo: "https://github.com/yumanuralfath/baitul_mal",
-    download_url:
-      "https://github.com/yumanuralfath/baitul_mal/releases/tag/v1.2.5",
+    downloads: [
+      {
+        platform: "android",
+        url: "https://github.com/yumanuralfath/baitul_mal/releases/tag/v1.2.5",
+      },
+    ],
     thumbnail:
       "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781678927/baitul_tfcnqm_poster.jpg",
     video:
@@ -80,8 +115,12 @@ export const projects: Project[] = [
     tags: ["C", "OpenWrt", "Embedded", "Networking", "Low-level"],
     repo: "https://github.com/yumanuralfath/api_c_openwrt",
     featured: false,
-    download_url:
-      "https://github.com/yumanuralfath/api_c_openwrt/releases/download/v1.1.9/api_c_1.1-3_mipsel_24kc.ipk",
+    downloads: [
+      {
+        platform: "linux",
+        url: "https://github.com/yumanuralfath/api_c_openwrt/releases/download/v1.1.9/api_c_1.1-3_mipsel_24kc.ipk",
+      },
+    ],
     year: 2025,
   },
   {
@@ -97,7 +136,12 @@ export const projects: Project[] = [
     },
     tags: ["C", "Reverse Engineering", "PS2", "Binary Parser", "AUR"],
     repo: "https://github.com/yumanuralfath/alfath_save_ps2",
-    download_url: "https://aur.archlinux.org/packages/alfathsave",
+    downloads: [
+      {
+        platform: "linux",
+        url: "https://aur.archlinux.org/packages/alfathsave",
+      },
+    ],
     featured: false,
     image:
       "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781681146/screenshot_17062026_142505_cykoa4.png",
