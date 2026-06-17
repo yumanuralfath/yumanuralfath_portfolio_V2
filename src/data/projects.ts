@@ -80,6 +80,8 @@ export const projects: Project[] = [
     tags: ["C", "OpenWrt", "Embedded", "Networking", "Low-level"],
     repo: "https://github.com/yumanuralfath/api_c_openwrt",
     featured: false,
+    download_url:
+      "https://github.com/yumanuralfath/api_c_openwrt/releases/download/v1.1.9/api_c_1.1-3_mipsel_24kc.ipk",
     year: 2025,
   },
   {
@@ -90,12 +92,15 @@ export const projects: Project[] = [
       en: "A utility to read and manage PlayStation 2 Virtual Memory Card save files.",
     },
     detail: {
-      id: "Sebuah proyek eksplorasi struktur data file biner. Aplikasi ini memungkinkan pengguna untuk membedah isi memory card PS2, mengekstrak ikon, dan mengelola save data langsung dari komputer menggunakan bahasa C.",
-      en: "A project exploring binary file data structures. This application allows users to dissect PS2 memory card contents, extract icons, and manage save data directly from a computer using C.",
+      id: "Sebuah proyek eksplorasi struktur data file biner. Aplikasi ini memungkinkan pengguna untuk membedah isi memory card PS2, mengekstrak ikon, dan mengelola save data langsung dari komputer menggunakan bahasa C. Proyek ini juga tersedia di AUR (Arch User Repository) dengan nama alfathsave.",
+      en: "A project exploring binary file data structures. This application allows users to dissect PS2 memory card contents, extract icons, and manage save data directly from a computer using C. This project is also available on the AUR (Arch User Repository) as alfathsave.",
     },
-    tags: ["C", "Reverse Engineering", "PS2", "Binary Parser"],
+    tags: ["C", "Reverse Engineering", "PS2", "Binary Parser", "AUR"],
     repo: "https://github.com/yumanuralfath/alfath_save_ps2",
+    download_url: "https://aur.archlinux.org/packages/alfathsave",
     featured: false,
+    image:
+      "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781681146/screenshot_17062026_142505_cykoa4.png",
     year: 2024,
   },
 ];

@@ -168,13 +168,23 @@ const thumbSource = thumbnail || (isVideo ? null : image);
 
     containers.forEach(container => {
       const video = container.querySelector('.video-preview') as HTMLVideoElement;
+      const card = container.closest('article');
 
-      if (video) {
-        container.addEventListener('mouseenter', () => {
-          video.play().catch(() => {});
+      if (video && card) {
+        // Play and unmute when hovering the entire card
+        card.addEventListener('mouseenter', () => {
+          video.muted = false;
+          video.play().catch(() => {
+            // If unmute autoplay fails, try muted autoplay
+            video.muted = true;
+            video.play().catch(() => {});
+          });
         });
-        container.addEventListener('mouseleave', () => {
+
+        // Pause and mute when leaving the card
+        card.addEventListener('mouseleave', () => {
           video.pause();
+          video.muted = true;
           video.currentTime = 0;
         });
       }
