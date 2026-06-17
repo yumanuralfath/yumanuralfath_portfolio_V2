@@ -52,6 +52,10 @@ export const projects: Project[] = [
         platform: "windows",
         url: "https://github.com/yumanuralfath/npy/releases/download/1.0.0/NPY_Setup.exe",
       },
+      {
+        platform: "linux",
+        url: "https://drive.google.com/file/d/1KOuJGJWasdytUrWLQO0tHArpDXoEM_O3/view?usp=sharing",
+      },
     ],
     thumbnail:
       "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781699457/2026-06-17_19-20-55_qkkajv_poster.jpg",
