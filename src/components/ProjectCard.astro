@@ -12,26 +12,51 @@ interface Props {
 }
 
 const { project, compact = false, loading = "eager" } = Astro.props;
-const { slug, title, description, detail, tags, href, repo, frontend_repo, backend_repo, download_url, year, image } = project;
+const { slug, title, description, detail, tags, href, repo, frontend_repo, backend_repo, download_url, year, image, thumbnail, video } = project;
 
 const lang = getLangFromUrl(Astro.url);
 const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description[lang]);
+
+const mediaSource = video || image;
+const isVideo = mediaSource?.endsWith('.mp4') || mediaSource?.endsWith('.webm') || mediaSource?.endsWith('.mkv') || mediaSource?.endsWith('.mov');
+const thumbSource = thumbnail || (isVideo ? null : image);
 ---
 
 <article class="relative group p-6 border border-brand-border rounded-lg glass overflow-hidden transition-all duration-300 hover:border-brand-accent hover:-translate-y-1">
   <!-- Glowing Laboratory Effect -->
   <div class="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-brand-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-  {image && (
+  {(thumbSource || isVideo) && (
     <>
       <div 
-        class="relative w-full aspect-video mb-5 rounded-md overflow-hidden border border-brand-border/50 bg-brand-bg group-hover:border-brand-accent/30 transition-colors cursor-zoom-in project-image-container"
+        class="relative w-full aspect-video mb-5 rounded-md overflow-hidden border border-brand-border/50 bg-brand-bg group-hover:border-brand-accent/30 transition-colors cursor-zoom-in project-media-container"
         data-slug={slug}
       >
-        <!-- Media -->
-        {image.endsWith('.mp4') || image.endsWith('.webm') ? (
-          <video src={image} autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-        ) : (
+        <!-- Thumbnail -->
+        {thumbSource && (
+          <Image 
+            src={thumbSource} 
+            alt={title} 
+            width={800} 
+            height={450} 
+            loading={loading}
+            class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-0 transition-opacity duration-500 z-10" 
+          />
+        )}
+
+        <!-- Video Preview -->
+        {isVideo && (
+          <video 
+            src={mediaSource} 
+            muted 
+            loop 
+            playsinline 
+            class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 video-preview"
+          ></video>
+        )}
+
+        <!-- Fallback Image (if no thumbnail and not video) -->
+        {!thumbSource && !isVideo && image && (
           <Image 
             src={image} 
             alt={title} 
@@ -69,8 +94,8 @@ const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description
           </button>
 
           <div class="relative w-full max-h-[85vh] flex items-center justify-center">
-             {image.endsWith('.mp4') || image.endsWith('.webm') ? (
-              <video src={image} controls autoplay loop class="max-w-full max-h-[80vh] rounded-lg border border-brand-border shadow-2xl" />
+             {isVideo ? (
+              <video src={mediaSource} controls autoplay loop class="max-w-full max-h-[80vh] rounded-lg border border-brand-border shadow-2xl" />
             ) : (
               <img 
                 src={image} 
@@ -137,17 +162,35 @@ const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description
 
 <script>
   function setupDialogs() {
-    const containers = document.querySelectorAll('.project-image-container');
+    const containers = document.querySelectorAll('.project-media-container');
     const closeButtons = document.querySelectorAll('.close-dialog');
     const dialogs = document.querySelectorAll('.project-dialog');
 
     containers.forEach(container => {
+      const video = container.querySelector('.video-preview') as HTMLVideoElement;
+
+      if (video) {
+        container.addEventListener('mouseenter', () => {
+          video.play().catch(() => {});
+        });
+        container.addEventListener('mouseleave', () => {
+          video.pause();
+          video.currentTime = 0;
+        });
+      }
+
       container.addEventListener('click', (e) => {
         const slug = container.getAttribute('data-slug');
         const dialog = document.getElementById(`dialog-${slug}`) as HTMLDialogElement;
         if (dialog) {
           dialog.showModal();
           document.body.style.overflow = 'hidden';
+          
+          // Ensure the dialog video plays
+          const dialogVideo = dialog.querySelector('video');
+          if (dialogVideo) {
+            dialogVideo.play().catch(() => {});
+          }
         }
       });
     });
@@ -171,6 +214,11 @@ const displayDesc = compact ? description[lang] : (detail?.[lang] ?? description
 
       dialog.addEventListener('close', () => {
         document.body.style.overflow = '';
+        // Pause dialog video when closed
+        const dialogVideo = dialog.querySelector('video');
+        if (dialogVideo) {
+          dialogVideo.pause();
+        }
       });
     });
   }
