@@ -38,7 +38,14 @@ export const projects: Project[] = [
       id: "NPY (Network Pharmacology Pipeline) adalah alat bantu riset biokimia yang mengotomatisasi pengumpulan data dari berbagai database bioinformatika. Pipeline ini mempercepat proses identifikasi target gen, prediksi interaksi obat, analisis jalur fungsional, dan konstruksi jaringan protein-protein interaction (PPI).",
       en: "NPY (Network Pharmacology Pipeline) is a biochemistry research tool that automates data collection from various bioinformatics databases. This pipeline accelerates the process of gene target identification, drug interaction prediction, functional pathway analysis, and protein-protein interaction (PPI) network construction.",
     },
-    tags: ["Python", "Bioinformatics", "Pharmacology", "Data Scraping", "Automation"],
+    tags: [
+      "Rust",
+      "Bioinformatics",
+      "Pharmacology",
+      "Web Scraping",
+      "CLI",
+      "Automation",
+    ],
     repo: "https://github.com/yumanuralfath/npy",
     downloads: [
       {
@@ -46,8 +53,12 @@ export const projects: Project[] = [
         url: "https://github.com/yumanuralfath/npy/releases/download/1.0.0/NPY_Setup.exe",
       },
     ],
+    thumbnail:
+      "https://res.cloudinary.com/dx8dogwhc/image/upload/v1781699457/2026-06-17_19-20-55_qkkajv_poster.jpg",
+    video:
+      "https://res.cloudinary.com/dx8dogwhc/video/upload/v1781699248/2026-06-17_19-20-55_qkkajv.webm",
     featured: true,
-    year: 2026,
+    year: 2025,
   },
   {
     slug: "redio",
