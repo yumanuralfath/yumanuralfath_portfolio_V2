@@ -106,7 +106,7 @@ export const projects: Project[] = [
     downloads: [
       {
         platform: "android",
-        url: "https://github.com/yumanuralfath/baitul_mal/releases/tag/v1.2.5",
+        url: "https://github.com/yumanuralfath/baitul_mal/releases/tag/v1.3.0",
       },
     ],
     thumbnail:
