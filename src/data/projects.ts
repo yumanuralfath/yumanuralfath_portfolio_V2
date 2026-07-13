@@ -65,6 +65,45 @@ export const projects: Project[] = [
     year: 2025,
   },
   {
+    slug: "yomodoro",
+    title: "Yomodoro: Pomodoro Tracker",
+    description: {
+      id: "Aplikasi pengatur waktu Pomodoro berbasis web yang terintegrasi dengan pelacak sesi kerja dan statistik produktivitas.",
+      en: "Web-based Pomodoro timer application integrated with work session tracking and productivity statistics.",
+    },
+    detail: {
+      id: "Yomodoro dirancang untuk meningkatkan produktivitas dengan memadukan teknik Pomodoro klasik dan pencatatan sesi kerja secara otomatis. Pengguna dapat melacak sesi fokus, mengelola riwayat tugas, dan melihat statistik performa kerja mereka. Dibangun menggunakan Laravel 13, Inertia.js (React), TailwindCSS v4, Radix UI, dan TypeScript.",
+      en: "Yomodoro is designed to boost productivity by automatically combining the classic Pomodoro technique with work session logging. Users can track focus sessions, manage task history, and view work performance statistics. Built using Laravel 13, Inertia.js (React), TailwindCSS v4, Radix UI, and TypeScript.",
+    },
+    tags: ["Laravel", "Inertia.js", "React", "TypeScript", "TailwindCSS"],
+    href: "https://yumana.gamer.gd/",
+    repo: "https://github.com/yumanuralfath/yomodoro",
+    thumbnail:
+      "https://res.cloudinary.com/dx8dogwhc/image/upload/v1783915323/2026-07-13_10-58-55_gpmgmt_poster.jpg",
+    video:
+      "https://res.cloudinary.com/dx8dogwhc/video/upload/v1783915245/2026-07-13_10-58-55_gpmgmt.mkv",
+    featured: true,
+    year: 2026,
+  },
+  {
+    slug: "portfolio-website",
+    title: "Portofolio Website V.2.0",
+    description: {
+      id: "Website portofolio pribadi versi kedua yang dibangun dengan Astro, TailwindCSS, dan TypeScript untuk menampilkan proyek dan profil secara interaktif.",
+      en: "Second version of my personal portfolio website, built with Astro, TailwindCSS, and TypeScript to showcase projects and profile interactively.",
+    },
+    detail: {
+      id: "Proyek ini dirancang ulang dengan fokus pada kecepatan performa dan estetika lab modern. Menggunakan Astro untuk static-site generation (SSG) super cepat, TailwindCSS untuk tata letak responsif, dan TypeScript demi keamanan kode. Dilengkapi dengan galeri proyek interaktif (dilengkapi video preview) serta dukungan multibahasa (i18n).",
+      en: "This project is redesigned with a focus on speed performance and modern lab aesthetics. It uses Astro for super-fast static-site generation (SSG), TailwindCSS for responsive layouts, and TypeScript for code safety. Features include an interactive project gallery (with video previews) and multi-language support (i18n).",
+    },
+    tags: ["Astro", "TailwindCSS", "TypeScript", "i18n", "Responsive"],
+    repo: "https://github.com/yumanuralfath/yumanuralfath_portfolio_V2",
+    featured: true,
+    image:
+      "https://res.cloudinary.com/dx8dogwhc/image/upload/v1783914683/screenshot_13072026_105006_fonogb.png",
+    year: 2026,
+  },
+  {
     slug: "redio",
     title: "Redio: TUI Radio Player",
     description: {
