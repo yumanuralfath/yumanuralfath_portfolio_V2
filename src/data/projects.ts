@@ -98,7 +98,7 @@ export const projects: Project[] = [
     },
     tags: ["Astro", "TailwindCSS", "TypeScript", "i18n", "Responsive"],
     repo: "https://github.com/yumanuralfath/yumanuralfath_portfolio_V2",
-    featured: true,
+    featured: false,
     image:
       "https://res.cloudinary.com/dx8dogwhc/image/upload/v1783914683/screenshot_13072026_105006_fonogb.png",
     year: 2026,
